@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab_Lana
 {
@@ -23,8 +20,9 @@ namespace lab_Lana
             verticesCount = matrix.GetLength(0);
         }
 
-        public abstract (List<int> path, int distance) Solve();
+      
+        public abstract (List<int> path, int totalCost) Solve();
+
         protected abstract bool ValidateInput();
     }
-
 }

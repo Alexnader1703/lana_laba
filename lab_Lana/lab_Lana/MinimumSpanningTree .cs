@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab_Lana
 {
@@ -13,7 +10,7 @@ namespace lab_Lana
     {
         public MinimumSpanningTree(int[,] matrix) : base(matrix) { }
 
-        public override (List<int> path, int distance) Solve()
+        public override (List<int> path, int totalCost) Solve()
         {
             if (!ValidateInput())
                 throw new InvalidOperationException("Некорректные входные данные");
@@ -49,7 +46,6 @@ namespace lab_Lana
                 }
             }
 
-           
             for (int i = 1; i < verticesCount; i++)
             {
                 totalWeight += adjacencyMatrix[i, parent[i]];
@@ -77,7 +73,6 @@ namespace lab_Lana
 
         protected override bool ValidateInput()
         {
-           
             for (int i = 0; i < verticesCount; i++)
             {
                 for (int j = 0; j < verticesCount; j++)

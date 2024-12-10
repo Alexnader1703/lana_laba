@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab_Lana
 {
@@ -13,13 +10,13 @@ namespace lab_Lana
     {
         public TravelingSalesmanProblem(int[,] matrix) : base(matrix) { }
 
-        public override (List<int> path, int distance) Solve()
+        public override (List<int> path, int totalCost) Solve()
         {
             if (!ValidateInput())
                 throw new InvalidOperationException("Некорректные входные данные");
 
             var visited = new bool[verticesCount];
-            var path = new List<int> { 0 }; 
+            var path = new List<int> { 0 };
             visited[0] = true;
             int currentVertex = 0;
             int totalDistance = 0;
@@ -33,7 +30,6 @@ namespace lab_Lana
                 currentVertex = nextVertex;
             }
 
-       
             totalDistance += adjacencyMatrix[currentVertex, 0];
             path.Add(0);
 
@@ -59,7 +55,6 @@ namespace lab_Lana
 
         protected override bool ValidateInput()
         {
-            // Проверка на связность графа и неотрицательность весов
             for (int i = 0; i < verticesCount; i++)
             {
                 for (int j = 0; j < verticesCount; j++)
@@ -71,5 +66,4 @@ namespace lab_Lana
             return true;
         }
     }
-
 }

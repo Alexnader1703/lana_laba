@@ -51,17 +51,39 @@ namespace lab_Lana
 
         private void OnSolveClick(object sender, RoutedEventArgs e)
         {
-            
             GetMatrixFromDynamicInputs();
 
-            
             OptimizationAlgorithm algorithm = CreateAlgorithm();
             if (algorithm == null) return;
 
-            var (path, distance) = algorithm.Solve();
+            
+            if (algorithm is ShortestPath shortestPathAlgorithm)
+            {
+             
+                var (allPaths, distances) = shortestPathAlgorithm.SolveAllPaths();
+                DisplayAllResults(allPaths, distances);
+            }
+            else
+            {
+              
+                var (path, distance) = algorithm.Solve();
+                DisplaySingleResult(path, distance);
+            }
+        }
+        private void DisplaySingleResult(List<int> path, int distance)
+        {
+         
+            GraphCanvas.Children.Clear();
+
+        
+            ResultTextBlock.Text = "Найденный путь:\n";
+
+          
+            ResultTextBlock.Text += $"Путь: {string.Join(" -> ", path)}\n";
+            ResultTextBlock.Text += $"Общее расстояние: {distance}\n";
 
          
-            DisplayResults(path, distance);
+            DrawGraph(path);
         }
 
         private OptimizationAlgorithm CreateAlgorithm()
@@ -71,7 +93,7 @@ namespace lab_Lana
                 case 0:
                     return new TravelingSalesmanProblem(adjacencyMatrix);
                 case 1:
-                    return new ShortestPath(adjacencyMatrix);
+                    return new ShortestPath(adjacencyMatrix); 
                 case 2:
                     return new MinimumSpanningTree(adjacencyMatrix);
                 default:
@@ -79,6 +101,7 @@ namespace lab_Lana
                     return null;
             }
         }
+
 
         private void GetMatrixFromDynamicInputs()
         {
@@ -106,18 +129,25 @@ namespace lab_Lana
             }
         }
 
-        private void DisplayResults(List<int> path, int distance)
+        private void DisplayAllResults(List<List<int>> allPaths, List<int> distances)
         {
-           
+            
             GraphCanvas.Children.Clear();
 
-           
-            ResultTextBlock.Text = $"Найденный путь: {string.Join(" -> ", path)}\n" +
-                                 $"Общее расстояние: {distance}";
+            ResultTextBlock.Text = "Найденные пути от вершины 0 до всех остальных вершин:\n";
 
-          
-            DrawGraph(path);
+            
+            for (int i = 0; i < allPaths.Count; i++)
+            {
+                var path = allPaths[i];
+                int distance = distances[i];
+                ResultTextBlock.Text += $"Вершина {i}: путь {string.Join(" -> ", path)}, длина = {distance}\n";
+
+                
+                DrawGraph(path);
+            }
         }
+
 
         private void DrawGraph(List<int> path)
         {
@@ -126,7 +156,7 @@ namespace lab_Lana
             double centerY = GraphCanvas.ActualHeight / 2;
             double radius = Math.Min(centerX, centerY) - CanvasMargin;
 
-          
+           
             for (int i = 0; i < verticesCount; i++)
             {
                 double angle = 2 * Math.PI * i / verticesCount;
@@ -134,7 +164,6 @@ namespace lab_Lana
                 double y = centerY + radius * Math.Sin(angle);
                 vertices[i] = new Point(x, y);
 
-               
                 DrawVertex(i, x, y);
             }
 

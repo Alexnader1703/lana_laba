@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lab_Lana")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+927d9ec5edfa3035db1c155691e882721ca6933c")]
 [assembly: System.Reflection.AssemblyProductAttribute("lab_Lana")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lab_Lana")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
